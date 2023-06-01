@@ -1,12 +1,12 @@
-Project Description
+**Project Description**
 
 This is a project that allows users to send bulk sms 
 
-Project Limitation
+**Project Limitation**
 
 The api for this project is not yet live
 
-Project Technology
+**Project Technology**
 
 Project Technology are
 
@@ -31,7 +31,7 @@ A Browser
 Internet Connection
 
 
-How to set up project
+**How to set up project**
 
 Clone or download the project
 
