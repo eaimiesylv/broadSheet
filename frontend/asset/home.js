@@ -1,5 +1,6 @@
 let pageCount = 1;
-let url ='http://emmaproject.online/api/sms'
+let url ='https://emmaproject.online/api/sms'
+//let url ='http://127.0.0.1:8000/api/sms'
 $(document).ready(function() {
   // Set page total on page load
   $('#pageTotal').text('160');
@@ -70,16 +71,15 @@ function processTaskToSubmit(){
 		}
 	  let sender=$("#sender").val();
 	  let recipients=$("#recipients").val();
-	  let recipientArray = recipients.split(",");
-		// add comma at the end of every line
-		if (recipientArray.length <= 1) {
-			recipients = recipients.replace(/(\d+)(?!\,)/g, '$1,');
-		} 
-		//alert(recipients);
-		let pt = recipients.split(",");
+	  //add comma before every number
+	  let recipientArray = recipients.replace(/([^,\s])\s+/g, '$1,');
 		
-		let count = pt.length-1;
-		let msgC=' a page of message to '
+		
+		
+		let pt = recipientArray.split(",");
+		
+		let count = pt.length;
+		let msgC='  page of message to '
 		if(pageC > 1){
 			 msgC=' pages of message to '
 		}
@@ -90,7 +90,7 @@ function processTaskToSubmit(){
 	
 }
 function createTask(sender, recipients, msg,pageCount){
-	
+	console.log(url);
 	 $.ajax({
     type: 'POST',
     url: url,

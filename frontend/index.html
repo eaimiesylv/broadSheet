@@ -20,7 +20,7 @@
 
  <body>
   <header>
-    <h1>Quick Sms Service</h1>
+    <h1 id="heading">Quick Sms</h1>
 	
 	<i class="fa-solid fa-user"></i>
 
@@ -40,7 +40,7 @@
   <main>
   <i id="sidebar-toggle" class="fa-solid fa-bars"></i>
 
-    <h2>Send Message</h2>
+    <h4>Send Message</h4>
 	
 	
 	
@@ -48,7 +48,7 @@
 					  <div class="form-group">
 						<div id="page_detail">
 							
-							<label>Sender Name</label>
+							<label id="sender_name">Sender Name</label>
 							<span id="pageCount">Page Count:1</span>
 						</div>
 						<input type="text" class="form-control" placeholder="Sender Name" id="sender" required>
@@ -95,16 +95,19 @@
       <div class="modal-body">
 			<table class="table">
 				<tr>
-					<td> SMS Cost of Sms</td><td id="cost"> </td>
+					<td>  Cost of Sms</td><td id="cost"> </td>
 				</tr>
 				<tr>
-					<td>Number of Sent Sms</td><td id="number_delivered"> </td>
+					<td>SMS sent successfully</td><td id="number_delivered"> </td>
 				</tr>
 				<tr>
-					<td>Failed Sms Count</td><td id="errCount"> </td>
+					<td>Failed SMS Count</td><td id="errCount"> </td>
 				</tr>
 				<tr>
 					<td>List of Failed Numbers</td><td id="not_found"> </td>
+				</tr>
+				<tr>
+					<td colspan="2"><small>A failed SMS is as a result of unsupported prefix</small></td>
 				</tr>
 			</table>
       </div>

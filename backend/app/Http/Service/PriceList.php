@@ -5,7 +5,7 @@ Class PriceList{
 	public $fileContent;
 	public function __construct(){
 		//read file
-		$filePath = public_path('priceList.txt');
+		$filePath = public_path('pricelist.txt');
         if (File::exists($filePath)) {
              $this->fileContent= file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
             

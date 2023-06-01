@@ -106,6 +106,9 @@ span label{
   #sidebar-toggle {
     display: inline-block;
   }
+  #heading{
+	font-size:1em;  
+  }
 }
 #sender_error,#msg_error, #recipients_error{
 	color:red;
