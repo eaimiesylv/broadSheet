@@ -1,0 +1,113 @@
+body {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "footer footer";
+  min-height: 100vh;
+  margin: 0;
+}
+
+header {
+  grid-area: header;
+  background-color: #f0f0f0;
+  padding:1em;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  background-color: #e0e0e0;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(0);
+  
+}
+
+.sidebar.closed {
+  transform: translateX(-100%);
+  width: 0; 
+  display:none;
+}
+
+main {
+  grid-area: main;
+  background-color: #ffffff;
+  padding:1em;
+ 
+ 
+}
+
+
+
+footer {
+  grid-area: footer;
+  background-color: #f0f0f0;
+  padding: 10px;
+}
+header {
+  grid-area: header;
+  background-color: #f0f0f0;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header button {
+  margin-left: 10px;
+}
+
+
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding:1em;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: #333333;
+}
+span label{
+	font-weight:bold;
+}
+#msg {
+  display: flex;
+  
+}
+#msg span {
+  margin-left: auto;
+}
+#page_detail{
+  display: flex;
+  
+}
+#page_detail span {
+  margin-left: auto;
+}
+#pageCount{
+  font-weight:bold;
+}
+/* Hide the button on large screens */
+@media (min-width: 768px) {
+  #sidebar-toggle {
+   // display: none;
+  }
+}
+
+/* Show the button on small screens */
+@media (max-width: 767px) {
+  #sidebar-toggle {
+    display: inline-block;
+  }
+}
+#sender_error,#msg_error, #recipients_error{
+	color:red;
+
+}

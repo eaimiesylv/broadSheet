@@ -1,0 +1,130 @@
+<html>
+	  <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Bulk Sms</title>
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+		 <link rel="stylesheet" href="asset/style.css"/>
+        <!-- convert all form field to html tag -->
+		</head>
+
+
+ <body>
+  <header>
+    <h1>Quick Sms Service</h1>
+	
+	<i class="fa-solid fa-user"></i>
+
+  </header>
+
+  <div class="sidebar">
+    <ul>
+      <li><a href="#"><i class="fa-solid fa-envelope"></i> Send Msg</a></li>
+      <li><a href="#"> <i class="fa-solid fa-dollar-sign"></i> Price List</a></li>
+      
+      <!-- Add more sidebar links as needed -->
+    </ul>
+  </div>
+
+ 
+
+  <main>
+  <i id="sidebar-toggle" class="fa-solid fa-bars"></i>
+
+    <h2>Send Message</h2>
+	
+	
+	
+		<form action="#">
+					  <div class="form-group">
+						<div id="page_detail">
+							
+							<label>Sender Name</label>
+							<span id="pageCount">Page Count:1</span>
+						</div>
+						<input type="text" class="form-control" placeholder="Sender Name" id="sender" required>
+						<span id="sender_error"></span>
+					  </div>
+					  <div class="form-group">
+						<label for="recipients">Receipent:</label>
+						</div>
+						<textarea class="form-control" placeholder="Enter One or More Recipient" id="recipients" required></textarea>
+					  </div>
+					  <span id="recipients_error"></span>
+					  
+					  <div class="form-group">
+						<div id="msg">
+							<label for="main_msg">Message:</label>
+							<span>
+							 
+							<label id='character_entered'>160</label>/<label id="pageTotal" required></label>
+							</span>
+						</div>
+						<textarea class="form-control" placeholder="Enter One or More Recipient" id="main_msg" required></textarea>
+					  </div>
+					  <span id="msg_error"></span>
+						
+					   <div>
+						
+					   <button type="submit" onclick="processTaskToSubmit()" class="btn btn-primary">Submit</button>
+					   </div>
+					</form>
+					
+					<!-- Button trigger modal 
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button> -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+        <h5 class="modal-title text-center pt-3" id="exampleModalLabel">Transaction Detail</h5>
+       
+     
+      <div class="modal-body">
+			<table class="table">
+				<tr>
+					<td> SMS Cost of Sms</td><td id="cost"> </td>
+				</tr>
+				<tr>
+					<td>Number of Sent Sms</td><td id="number_delivered"> </td>
+				</tr>
+				<tr>
+					<td>Failed Sms Count</td><td id="errCount"> </td>
+				</tr>
+				<tr>
+					<td>List of Failed Numbers</td><td id="not_found"> </td>
+				</tr>
+			</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+       
+      </div>
+    </div>
+  </div>
+</div>
+  </main>
+
+  <footer>
+    <p>Project Designed By Okom Emmanuel</p>
+  </footer>
+	
+<script src="asset/home.js"></script>
+
+
+
+</body>
+
+</html>
