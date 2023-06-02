@@ -1,7 +1,13 @@
 let pageCount = 1;
 let url ='https://emmaproject.online/api/sms'
-//let url ='http://127.0.0.1:8000/api/sms'
+//let url ='http://127.0.0.1:8000/api/sms';
+
+
 $(document).ready(function() {
+	
+	$('#sidebar-toggle').click(function() {
+    $('.sidebar').toggleClass('closed');
+  });
   // Set page total on page load
   $('#pageTotal').text('160');
   
@@ -54,7 +60,7 @@ function checkPageCountAndCharacter(totalCharacters) {
 		pageNo =pageNo-1;
 		//get expected total character for this page
 		let expectedPageCount=160 + (pageNo * 154)
-		//alert(expectedPageCount-characterEnter);
+	
 		return expectedPageCount-characterEnter;
 	}
  }
@@ -71,14 +77,19 @@ function processTaskToSubmit(){
 		}
 	  let sender=$("#sender").val();
 	  let recipients=$("#recipients").val();
+	  //remove every character except comma
+	 let recipientArray = recipients.replace(/[^\d,\s]/g, '');
+	 
 	  //add comma before every number
-	  let recipientArray = recipients.replace(/([^,\s])\s+/g, '$1,');
+	 recipientArray = recipientArray.replace(/([^,\s\n])[\s\n]+/g, '$1,');
+
+	//remove comma before ending or begining
+	   recipientArray= recipientArray.replace(/^[,\s]+|[,\s]+$/g, '');
 		
 		
+		let listOfNumber = recipientArray.split(",");
 		
-		let pt = recipientArray.split(",");
-		
-		let count = pt.length;
+		let count = listOfNumber.length;
 		let msgC='  page of message to '
 		if(pageC > 1){
 			 msgC=' pages of message to '
@@ -86,11 +97,11 @@ function processTaskToSubmit(){
 		alert('you are about sending ' + pageC + msgC  + count + ' users ');
 	    let msg=$("#main_msg").val();
 		//alert(msg);
-		createTask(sender, recipients, msg, pageC)
+		createTask(sender, recipientArray, msg, pageC)
 	
 }
 function createTask(sender, recipients, msg,pageCount){
-	console.log(url);
+	console.log(recipients);
 	 $.ajax({
     type: 'POST',
     url: url,
@@ -107,7 +118,7 @@ function createTask(sender, recipients, msg,pageCount){
 		data['success']['errCount'];
 		data['success']['not_found'];
 		
-		 $('#cost').text(data['success']['cost'].toFixed(2));
+		 $('#cost').html('&#8358;' + data['success']['cost'].toFixed(2));
 		 $('#number_delivered').text(data['success']['number_delivered']);
 		 $('#errCount').text(data['success']['errCount']);
 		  $('#not_found').text(data['success']['not_found']);
@@ -145,3 +156,4 @@ function process_error(errors){
 $('.form-control').on('input', function() {
   $('#sender_error, #recipients_error, #msg_error').html(''); // Clear all errors
 });
+

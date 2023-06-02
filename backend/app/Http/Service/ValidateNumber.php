@@ -26,6 +26,7 @@ class ValidateNumber {
     }
 	
 	public function processCost(){
+		//this the receipent number
 		$allNumber=$this->cleanNumber();
 		//$this->priceList
 		$Totalcost=0;
@@ -35,6 +36,8 @@ class ValidateNumber {
 		foreach($allNumber as $key=>$value){
 			 //extract the first 6 digit as prefix
             $firstSixDigits = substr($value, 0, 6);
+			//echo $firstSixDigits;
+			//echo "<br>";
 			//get the cost price for this line prefix
 			if (array_key_exists($firstSixDigits, $this->priceList)) {
 					$Totalcost=$Totalcost+$this->priceList[$firstSixDigits];
@@ -46,7 +49,12 @@ class ValidateNumber {
 			}
 			
 		}
-		return ['cost'=>$Totalcost,'number_delivered'=> $count, 'not_found'=>$notFound,'errCount'=>$errCount-1];
+		if($count > 0){
+			$count--;
+		}
+		return ['cost'=>$Totalcost,'number_delivered'=> $count, 'not_found'=>$notFound,'errCount'=>$errCount,
+			'recepient'=>$allNumber
+		];
 	}
 	
 }
