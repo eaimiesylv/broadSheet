@@ -1,33 +1,28 @@
 let pageCount = 1;
 let url ='https://emmaproject.online/api/sms'
 //let url ='http://127.0.0.1:8000/api/sms';
-
-
 $(document).ready(function() {
-	
 	$('#sidebar-toggle').click(function() {
     $('.sidebar').toggleClass('closed');
   });
   // Set page total on page load
   $('#pageTotal').text('160');
-  
   //count input field
-  $('#main_msg').on('input keyup', function() {
-	//get the total number of characters from the msg box
+  $('#main_msg').on('input keyup', countInput);
+ });
+  
+ function countInput(){
+	 //get the total number of characters from the msg box
     let totalCharacters = $(this).val().length;
-	//data returns array of pagecount and pagetotal e.g 2 pages and 160 character
+	//data returns array of pagecount and maximum allowed character e.g 2 pages and 160 character
     let data=checkPageCountAndCharacter(totalCharacters);
     $('#pageCount').text('Page Count: ' + data['pageCount']);
-    //
 	$('#pageTotal').text(data['currentPageTotal']);
-	 let entered=nextPageCount(data['pageCount'], totalCharacters);
-     //let characterLeft="";
-	 
-	$('#character_entered').text(entered);
-  });
-
+     //get next character left
+	$('#character_entered').text(nextPageCount(data['pageCount'], totalCharacters));
+ }
 function checkPageCountAndCharacter(totalCharacters) {
-	//this function returns the current page and number of characters
+	//this function returns the current page and number of maximun allowed characters
 	let pageCount = 0;
 	let isFirstIteration = true;
 	let currentPageTotal=0;
@@ -48,10 +43,7 @@ function checkPageCountAndCharacter(totalCharacters) {
 		currentPageTotal= 154;
 	}
 	return {'pageCount':pageCount,'currentPageTotal':currentPageTotal};
-	}
-
-});
-
+}
 //this function counts the character remaining for other pages
  function nextPageCount(pageNo,characterEnter){
     if(pageNo == 1){
@@ -60,13 +52,12 @@ function checkPageCountAndCharacter(totalCharacters) {
 		pageNo =pageNo-1;
 		//get expected total character for this page
 		let expectedPageCount=160 + (pageNo * 154)
-	
 		return expectedPageCount-characterEnter;
 	}
  }
-
-function processTaskToSubmit(){
-	    
+function processTaskToSubmit(event){
+		 event.preventDefault();
+		
 		let pageC="";
 		//get page count
 		let pageCount = $("#pageCount").text();
@@ -75,30 +66,18 @@ function processTaskToSubmit(){
 		    let parts = pageCount.split(":");
 			pageC=parts[1].trim();
 		}
-	  let sender=$("#sender").val();
-	  let recipients=$("#recipients").val();
-	  //remove every character except comma
-	 let recipientArray = recipients.replace(/[^\d,\s]/g, '');
-	 
-	  //add comma before every number
-	 recipientArray = recipientArray.replace(/([^,\s\n])[\s\n]+/g, '$1,');
-
-	//remove comma before ending or begining
-	   recipientArray= recipientArray.replace(/^[,\s]+|[,\s]+$/g, '');
-		
-		
-		let listOfNumber = recipientArray.split(",");
-		
-		let count = listOfNumber.length;
-		let msgC='  page of message to '
+	  
+	  let recipientArray = cleanNumber($("#recipients").val());
+	  let listOfNumber = recipientArray.split(",");
+	  let count = listOfNumber.length;
+	  let msgC='  page of message to '
 		if(pageC > 1){
 			 msgC=' pages of message to '
 		}
 		alert('you are about sending ' + pageC + msgC  + count + ' users ');
-	    let msg=$("#main_msg").val();
-		//alert(msg);
-		createTask(sender, recipientArray, msg, pageC)
-	
+	   
+
+		createTask($("#sender").val(), $("#recipients").val(), $("#main_msg").val(), pageC)
 }
 function createTask(sender, recipients, msg,pageCount){
 	console.log(recipients);
@@ -113,24 +92,13 @@ function createTask(sender, recipients, msg,pageCount){
     },
     success: function (data) {
         console.log(data);
-		data['success']['cost'];
-		data['success']['number_delivered'];
-		data['success']['errCount'];
-		data['success']['not_found'];
-		
-		 $('#cost').html('&#8358;' + data['success']['cost'].toFixed(2));
-		 $('#number_delivered').text(data['success']['number_delivered']);
-		 $('#errCount').text(data['success']['errCount']);
-		  $('#not_found').text(data['success']['not_found']);
-		 //$("#exampleModal").html(data);
-		 $('#exampleModal').modal({'show' : true});
+		process_success(data)
     },
     error: function (xhr) {
         if (xhr.status === 422) {
             var errors = xhr.responseJSON.errors;
             // Handle validation errors here
 			process_error(errors);
-			
         } else {
             console.log(xhr.statusText);
         }
@@ -139,7 +107,6 @@ function createTask(sender, recipients, msg,pageCount){
 }
 function process_error(errors){
 	for(key in errors){
-		     
 			  if(key == 'sender'){
 				 $('#sender_error').text(errors[key]);
 			  }
@@ -149,11 +116,28 @@ function process_error(errors){
 			  else if( key == 'msg'){
 				 $('#msg_error').text(errors[key]);
 			  }
-			
 		   }
+}
+function process_success(data){
+		 $('#cost').html('&#8358;' + data['success']['cost'].toFixed(2));
+		 $('#number_delivered').text(data['success']['number_delivered']);
+		 $('#errCount').text(data['success']['errCount']);
+		  $('#not_found').text(data['success']['not_found']);
+		 //$("#exampleModal").html(data);
+		 $('#exampleModal').modal({'show' : true});
 }
 //clear it 
 $('.form-control').on('input', function() {
   $('#sender_error, #recipients_error, #msg_error').html(''); // Clear all errors
 });
-
+function cleanNumber(recipients){
+	//remove every character, white space before comma except comma, digit and white space character
+	 let recipientArray = recipients.replace(/[^,\d]|(\s,)/g, '');
+	
+	  //add comma before every number
+	 recipientArray = recipientArray.replace(/([^,\s\n])[\s\n]+/g, '$1,');
+		
+	//remove comma before ending or begining
+	   recipientArray= recipientArray.replace(/^[,\s]+|[,\s]+$/g, '');
+	  return recipientArray;
+}

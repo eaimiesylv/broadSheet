@@ -51,7 +51,7 @@
 							<label id="sender_name">Sender Name</label>
 							<span id="pageCount">Page Count:1</span>
 						</div>
-						<input type="text" class="form-control"  placeholder="Sender Name" id="sender" required>
+						<input type="text" class="form-control" value="" placeholder="Sender Name" id="sender" required>
 						<span id="sender_error"></span>
 					  </div>
 					  <div class="form-group">
@@ -69,13 +69,13 @@
 							<label id='character_entered'>160</label>/<label id="pageTotal" required></label>
 							</span>
 						</div>
-						<textarea class="form-control" placeholder="Enter One or More Recipient" id="main_msg" ></textarea>
+						<textarea class="form-control" placeholder="Enter One or More Recipient" id="main_msg"  value="msg"></textarea>
 					  </div>
 					  <span id="msg_error"></span>
 						
 					   <div>
 						
-					   <button type="submit" onclick="processTaskToSubmit()" class="btn btn-primary">Submit</button>
+					   <button type="submit" onclick="processTaskToSubmit(event)" class="btn btn-primary">Submit</button>
 					   </div>
 					</form>
 					

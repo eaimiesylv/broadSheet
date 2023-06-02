@@ -28,7 +28,7 @@ class SmsController extends Controller
         }
         //pass receipent  number and array of pricelist
         $cost=$processInputNumber->input($request->recipients, $priceList);
-        Sms::create($request->all());
+        //Sms::create($request->all());
         return response()->json(['success' =>$cost], 201);
        
       
